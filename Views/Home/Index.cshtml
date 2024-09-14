@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Sao kê ủng hộ bão Yagi";
+}
+
+<div class="jumbotron">
+    <table class="table table-striped" id="transaction" style="width: 100%;">
+        <thead>
+            <tr id="list-header">
+                <th scope="col">Mã giao dịch</th>
+                <th scope="col">Ngày giao dịch</th>
+                <th scope="col">Số tiền (VND)</th>
+                <th scope="col">Nội dung</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
+<script type="text/javascript">
+    var transactions = []        
+    $.ajax({
+        url: '/Home/ReadFile',
+        type: 'GET',
+        async: false,
+        success: function (data) {
+            $('#transaction tbody').empty();
+            transactions = data;
+        }
+    });
+
+    $('#transaction').DataTable({
+        data: transactions,
+        columns: [
+            {
+                data: 'Debit',
+                render: function (data, type) {
+                    return data == undefined ? "" : data;
+                }
+            },
+            {
+                data: 'Date',
+                render: function (data, type) {
+                    return data == undefined ? "" : data;
+                }
+            },
+            {
+                data: 'Credit',
+                render: function (data, type) {
+                    return data == undefined ? "" : data;
+                }
+            },
+            {
+                data: 'Details',
+                render: function (data, type) {
+                    return data == undefined ? "" : data;
+                }
+            }
+        ],
+        ordering: false,
+        processing: true,
+        language: {
+            processing: "Đang tải dữ liệu...",
+            search: "Tìm kiếm",
+            infoEmpty: "Hiển thị 0 đến 0 của 0 bản ghi",
+            infoFiltered: "(lọc từ _MAX_ bản ghi)",
+            lengthMenu: "Hiển thị _MENU_ bản ghi",
+            info: "Hiển thị _START_ đến _END_ của _TOTAL_ bản ghi",
+            loadingRecords: "Tổng số bản ghi",
+            zeroRecords: "Không tìm được bản ghi nào",
+            paginate: {
+                first: "Đầu",
+                previous: "Trước",
+                next: "Tiếp",
+                last: "Cuối"
+            }
+        }
+    });
+
+</script>
